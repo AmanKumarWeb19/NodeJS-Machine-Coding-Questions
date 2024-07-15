@@ -19,14 +19,25 @@ const postProduct = async (req, res) => {
   }
 };
 
-const updateProduct = (req, res) => {
+const updateProduct = async (req, res) => {
+  const ID = req.params.id;
+  const payload = req.body;
   try {
-  } catch (error) {}
+    await ProductModel.findByIdAndUpdate({ _id: ID }, payload);
+    res.status(200).send({ msg: "Update Successfull" });
+  } catch (error) {
+    res.status(500).send("Something went wrong to update the products");
+  }
 };
 
-const deleteProduct = (req, res) => {
+const deleteProduct = async (req, res) => {
+  const ID = req.params.id;
   try {
-  } catch (error) {}
+    await ProductModel.findByIdAndDelete({ _id: ID });
+    res.status(200).send({ msg: "delete Successfull" });
+  } catch (error) {
+    res.status(500).send("Something went wrong to delete the products");
+  }
 };
 
 module.exports = { getProduct, postProduct, updateProduct, deleteProduct };
